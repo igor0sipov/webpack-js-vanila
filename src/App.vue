@@ -3,10 +3,14 @@
     <h1 class="preview__title">Webpack Template</h1>
     <a class="preview__link" href="#">Repository link</a>
     <img class="preview__image" src="./assets/images/nature.jpg" />
+    <router-link to="/author">Show author</router-link>
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
+import './assets/styles/styles.css';
+
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'App',

@@ -66,6 +66,12 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.ts', '.js', '.vue', '.json'],
+    alias: {
+      vue: '@vue/runtime-dom',
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
