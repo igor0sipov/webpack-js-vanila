@@ -1,24 +1,44 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: { main: './src/main.js' },
+  entry: { main: './src/main.ts' },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'build.js',
     publicPath: '',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist/'),
-    liveReload: true,
-    inline: true,
-    compress: true,
-    port: 3000,
+    contentBase: path.resolve(__dirname, './dist'),
+    index: 'build.html',
     open: true,
+    compress: true,
+    hot: true,
+    port: 3000,
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: { babelrc: true },
+          },
+          {
+            loader: 'ts-loader',
+            options: { appendTsSuffixTo: [/\.vue$/] },
+          },
+        ],
+      },
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
@@ -48,13 +68,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/pages/index/index.html',
+      template: './public/index.html',
       filename: 'build.html',
       inject: 'body',
     }),
     new MiniCssExtractPlugin({
       filename: 'build.css',
     }),
+    new VueLoaderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   performance: {
     maxEntrypointSize: 512000,
