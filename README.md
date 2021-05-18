@@ -1,4 +1,4 @@
-# Vanilla
+# Vue 3 + Webpack 5 + Vue Router 4 + TypeScript 4
 
 ## Commands
 
